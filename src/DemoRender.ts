@@ -16,7 +16,7 @@ export class DemoRender {
 		const translatePosition = (position) => {
 			return {
 				x: Math.floor(position.x - boundaryMin.x) * scale,
-				y: Math.floor(position.y - boundaryMin.y) * scale
+				y: height - Math.floor(position.y - boundaryMin.y) * scale
 			}
 		};
 

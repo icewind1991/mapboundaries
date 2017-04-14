@@ -35,13 +35,6 @@ export class MapContainer extends React.Component<MapContainerProps, MapContaine
 		});
 	}
 
-	componentWillReceiveProps({contentSize}: MapContainerProps) {
-		this.setState({
-			height: this.container.clientHeight,
-			width: this.container.clientWidth
-		});
-	}
-
 	render() {
 		const scale = Math.min(this.state.width / this.props.contentSize.width, this.state.height / this.props.contentSize.height);
 		if (!this.sendScale && this.props.onScale) {

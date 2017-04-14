@@ -55,9 +55,10 @@ export class Panner extends React.Component<PannerProps, PannerState> {
 		});
 	}
 
-	componentWillReceiveProps({width, height, scale, contentSize}:PannerProps) {
+	componentWillReceiveProps({width, height, scale, contentSize}: PannerProps) {
 		if (
-			width == this.panner.screen.width && height == this.panner.screen.height) {
+			width == this.panner.screen.width && height == this.panner.screen.height &&
+			this.props.contentSize.width == contentSize.width && this.props.contentSize.height == contentSize.height) {
 			return;
 		}
 		this.panner.scale = scale;
@@ -95,10 +96,14 @@ export class Panner extends React.Component<PannerProps, PannerState> {
 				</div>
 				<div className="zoommenu">
 					<div className="plus"
-					     onClick={()=>{setZoomFactor(1.10, center)}}>+
+					     onClick={() => {
+						     setZoomFactor(1.10, center)
+					     }}>+
 					</div>
 					<div className="minus"
-					     onClick={()=>{setZoomFactor(0.90, center)}}>
+					     onClick={() => {
+						     setZoomFactor(0.90, center)
+					     }}>
 						-
 					</div>
 				</div>
