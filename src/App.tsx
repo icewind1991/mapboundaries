@@ -84,10 +84,29 @@ export class App extends React.Component<{}, AppState> {
 		const originalHeight = 1024 * this.state.scale; // 1024 is a magic number straight from cl_leveloverview code
 		const originalWidth = originalHeight * (this.state.originalWidth / this.state.originalHeight);
 
-		const width = originalWidth / this.state.originalWidth * this.state.imageWidth;
-		const height = originalHeight / this.state.originalHeight * this.state.imageHeight;
+		const width = (originalWidth / this.state.originalWidth) * this.state.imageWidth;
+		const height = (originalHeight / this.state.originalHeight) * this.state.imageHeight;
 
-		return {width: width / 10, height: height / 10};
+		return {width: width, height: height};
+	}
+
+	getCorners() {
+		const originalHeight = 1024 * this.state.scale; // 1024 is a magic number straight from cl_leveloverview code
+		const originalWidth = originalHeight * (this.state.originalWidth / this.state.originalHeight);
+
+		const width = (originalWidth / this.state.originalWidth) * this.state.imageWidth;
+		const height = (originalHeight / this.state.originalHeight) * this.state.imageHeight;
+
+		return {
+			boundaryMin: {
+				x: this.state.x - Math.floor(width / 2),
+				y: this.state.y - Math.floor(height / 2)
+			},
+			boundaryMax: {
+				x: this.state.x + Math.floor(width / 2),
+				y: this.state.y + Math.floor(height / 2)
+			}
+		}
 	}
 
 	render() {
@@ -95,10 +114,8 @@ export class App extends React.Component<{}, AppState> {
 		const demoWidth = (this.state.world.boundaryMax.x - this.state.world.boundaryMin.x) / 10;
 		const demoHeight = (this.state.world.boundaryMax.y - this.state.world.boundaryMin.y) / 10;
 
-		const offsetX = Math.floor((this.state.x - this.state.world.boundaryMin.x) / 10) - Math.floor(width / 2);
-		const offsetY = Math.floor((this.state.y - this.state.world.boundaryMin.y) / 10) - Math.floor(height / 2);
-
-		const topLeft = (this.state.x - this.state.world.boundaryMin.x);
+		const offsetX = Math.floor((this.state.x - this.state.world.boundaryMin.x - width / 2) / 10);
+		const offsetY = Math.floor((this.state.world.boundaryMax.y - this.state.y - height / 2) / 10);
 
 		return <div>
 			<input onChange={this.onNumberInputChange.bind(this, 'scale')}
@@ -115,8 +132,8 @@ export class App extends React.Component<{}, AppState> {
 			<input onChange={this.onSelectDemo} type="file"/>
 			<MapContainer contentSize={{width: demoWidth, height: demoHeight}}>
 				<img className="background" src={this.state.background || ''}
-				     width={width}
-				     height={height}
+				     width={width / 10}
+				     height={height / 10}
 				     style={{
 					     top: offsetY + 'px',
 					     left: offsetX + 'px',
@@ -133,6 +150,9 @@ export class App extends React.Component<{}, AppState> {
 				onChange={this.onNumberInputChange.bind(this, 'y')}
 				placeholder="y" type="number"
 				value={this.state.y}/>
+			<p>
+				<pre>{JSON.stringify(this.getCorners(), null, 4)}</pre>
+			</p>
 		</div>;
 	}
 }

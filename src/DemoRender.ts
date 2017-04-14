@@ -12,11 +12,13 @@ export class DemoRender {
 		const scale = Math.max(scaleX, scaleY);
 
 		const boundaryMin = match.world.boundaryMin;
+		const boundaryMax = match.world.boundaryMax;
+		console.log(boundaryMin, boundaryMax, width, height);
 
 		const translatePosition = (position) => {
 			return {
 				x: Math.floor(position.x - boundaryMin.x) * scale,
-				y: height - Math.floor(position.y - boundaryMin.y) * scale
+				y: Math.floor(boundaryMax.y - position.y) * scale
 			}
 		};
 
