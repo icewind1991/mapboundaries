@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {Demo} from 'tf2-demo/build/Demo';
-import {DemoRender} from "./DemoRender";
+import {DemoRender} from './DemoRender';
 
 export interface DemoViewerProps {
 	demo: Demo | null;
@@ -39,7 +39,9 @@ export class DemoViewer extends React.Component<DemoViewerProps, {}> {
 			height={this.props.height}
 			className={this.props.className}
 			ref={(canvas) => {
-				this.canvas = canvas
-			}}/>
+				if (canvas) {
+					this.canvas = canvas;
+				}
+			}}/>;
 	}
 }

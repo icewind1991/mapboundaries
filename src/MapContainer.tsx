@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Panner} from "./Panner/Panner";
+import {Panner} from './Panner/Panner';
 
 import './MapContainer.css';
 
@@ -18,7 +18,7 @@ export class MapContainerState {
 }
 
 export class MapContainer extends React.Component<MapContainerProps, MapContainerState> {
-	container: Element;
+	container: Element | null;
 	state: MapContainerState = {
 		width: 500,
 		height: 800
@@ -26,6 +26,9 @@ export class MapContainer extends React.Component<MapContainerProps, MapContaine
 	sendScale = false;
 
 	componentDidMount() {
+		if (!this.container) {
+			return;
+		}
 		if (this.container.clientWidth == this.state.width && this.container.clientHeight == this.state.height) {
 			return;
 		}
@@ -49,11 +52,11 @@ export class MapContainer extends React.Component<MapContainerProps, MapContaine
 		return (
 			<div className="map-container" ref={(div) => this.container = div}>
 				<Panner width={this.state.width} height={this.state.height}
-				        scale={scale} contentSize={this.props.contentSize}
-				        onScale={this.props.onScale}>
+						scale={scale} contentSize={this.props.contentSize}
+						onScale={this.props.onScale}>
 					{this.props.children}
 				</Panner>
 			</div>
-		)
+		);
 	}
 }
