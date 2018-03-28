@@ -1,12 +1,16 @@
 import * as React from 'react';
-import {Demo} from 'tf2-demo/build/Demo';
+import {Demo} from '@demostf/demo.js/build/Demo';
 import {DemoRender} from './DemoRender';
+import {Match, Packet, World} from '@demostf/demo.js/build';
 
 export interface DemoViewerProps {
 	demo: Demo | null;
 	width: number;
 	height: number;
 	className?: string;
+	packets: IterableIterator<Packet> | null;
+	world: World | null;
+	match: Match | null;
 }
 
 export class DemoViewer extends React.Component<DemoViewerProps, {}> {
@@ -17,8 +21,8 @@ export class DemoViewer extends React.Component<DemoViewerProps, {}> {
 	}
 
 	updateCanvas() {
-		if (this.props.demo) {
-			DemoRender.render(this.canvas, this.props.demo, this.props.width, this.props.height);
+		if (this.props.demo && this.props.packets && this.props.world && this.props.match) {
+			DemoRender.render(this.canvas, this.props.demo, this.props.width, this.props.height, this.props.packets, this.props.world, this.props.match);
 		}
 	}
 

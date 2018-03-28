@@ -20,6 +20,6 @@
   "dependencies": {
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "tf2-demo": "^1.1.5"
+    "@demostf/demo.js": "^2.1.1"
   }
 }

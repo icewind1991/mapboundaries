@@ -30,7 +30,6 @@ module.exports = {
 		}),
 		new webpack.NoEmitOnErrorsPlugin(),
 		new webpack.optimize.OccurrenceOrderPlugin(),
-		new webpack.optimize.UglifyJsPlugin(),
 		new webpack.DefinePlugin({
 			'process.env': {
 				// Useful to reduce the size of client-side libraries, e.g. react
