@@ -104,11 +104,11 @@ export class App extends React.Component<{}, AppState> {
 		const height = (originalHeight / this.state.originalHeight) * this.state.imageHeight;
 
 		return {
-			boundaryMin: {
+			boundary_min: {
 				x: this.state.x - Math.floor(width / 2),
 				y: this.state.y - Math.floor(height / 2)
 			},
-			boundaryMax: {
+			boundary_max: {
 				x: this.state.x + Math.floor(width / 2),
 				y: this.state.y + Math.floor(height / 2)
 			}
