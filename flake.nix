@@ -19,25 +19,15 @@
         (final: prev: {
           npmlock2nix = prev.callPackage npmlock2nix {};
         })
+        (import ./overlay.nix)
       ];
       pkgs = import nixpkgs {
         inherit system overlays;
       };
       lib = pkgs.lib;
-      src = lib.sources.sourceByRegex (lib.cleanSource ./.) ["package.*" "src(/.*)?" "tsconfig.json" ".*.config.js"];
-      nodeModules = pkgs.npmlock2nix.v2.node_modules {
-        inherit src;
-        nodejs = pkgs.nodejs_20;
-      };
     in rec {
       packages = rec {
-        map-boundaries = pkgs.npmlock2nix.v2.build {
-          inherit src;
-          installPhase = "cp -r build $out";
-          buildCommands = [ "npm run build" ];
-          nodejs = pkgs.nodejs_20;
-        };
-        node_modules = nodeModules;
+        map-boundaries = pkgs.map-boundaries;
         default = map-boundaries;
       };
       devShells.default = pkgs.mkShell {
@@ -45,5 +35,8 @@
           nodejs_20
         ];
       };
-    });
+    })
+    // {
+      overlays.default = import ./overlay.nix;
+    };
 }
