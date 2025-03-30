@@ -1,25 +1,17 @@
 {
   inputs = {
-    nixpkgs.url = "nixpkgs/release-23.05";
+    nixpkgs.url = "nixpkgs/release-24.11";
     utils.url = "github:numtide/flake-utils";
-    npmlock2nix = {
-      url = "github:nix-community/npmlock2nix";
-      flake = false;
-    };
   };
 
   outputs = {
     self,
     nixpkgs,
     utils,
-    npmlock2nix,
   }:
     utils.lib.eachDefaultSystem (system: let
       overlays = [
-        (final: prev: {
-          npmlock2nix = prev.callPackage npmlock2nix {};
-        })
-        (import ./overlay.nix)
+        (import ./nix/overlay.nix)
       ];
       pkgs = import nixpkgs {
         inherit system overlays;
@@ -37,6 +29,6 @@
       };
     })
     // {
-      overlays.default = import ./overlay.nix;
+      overlays.default = import ./nix/overlay.nix;
     };
 }
